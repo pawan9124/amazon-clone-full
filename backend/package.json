@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "this is amazon backend in express and node",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pawan saket",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.8",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.5.2"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
