@@ -31,7 +31,9 @@ function Product({ id, title, image, price, rating }) {
           {Array(rating)
             .fill()
             .map((_, i) => (
-              <p key={i + "rate"}>🌟</p>
+              <p key={i + "rate"} className="product__star_gold">
+                🌟
+              </p>
             ))}
         </div>
       </div>

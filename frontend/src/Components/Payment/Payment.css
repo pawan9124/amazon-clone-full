@@ -43,3 +43,65 @@
   margin-top: 10px;
   border-color: #a88734 #9c7e31 #846a29;
 }
+.payment__address {
+  display: flex;
+  flex-direction: row;
+}
+.payment__address_card {
+  padding: 5px;
+  max-width: 200px;
+  width: 100%;
+  height: 100px;
+  border: 1px dashed #676262;
+  margin-right: 15px;
+}
+.payment__address_card a {
+  text-decoration: none;
+  color: #676262;
+}
+.payment__link_address {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.payment__address_card_details {
+  padding: 5px;
+  padding-left: 10px;
+  max-width: 200px;
+  width: 100%;
+  height: 100px;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  font-size: 14px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-left: 10px;
+}
+.payment__address_card_details > p {
+  margin-left: 10px;
+  pointer-events: none;
+}
+.payment__address_selected_icon {
+  border: 2px solid green;
+  position: relative;
+}
+
+.payment__selected_check {
+  height: 25px;
+  width: 25px;
+  right: 0;
+  position: absolute;
+  top: 0;
+  padding: 8px;
+}
+.payment__stepper_button {
+  background: #f0c14b !important;
+  border-color: #a88734 #9c7e31 #846a29 !important;
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+.MuiStepIcon-root.MuiStepIcon-active,
+.MuiStepIcon-completed {
+  color: #f0c14b !important;
+}

@@ -30,7 +30,7 @@ export const registerUser = (userData, history) => (dispatch) => {
 };
 
 //Login - Get the User token and save in the local storage
-export const loginUser = (userData) => (dispatch) => {
+export const loginUser = (userData, history) => (dispatch) => {
   console.log("UserData---->", userData);
   try {
     axios
@@ -44,9 +44,20 @@ export const loginUser = (userData) => (dispatch) => {
 
         //Decoded the token to get the user data
         const decoded = jwt_decode(token);
+        //dispatch to the react context to share user details in full form
+        const userDetails = {
+          avatar: decoded.avatar,
+          id: decoded.id,
+          name: decoded.name,
+        };
+        dispatch({
+          type: "SET_USER",
+          user: userDetails,
+        });
 
         //Set the user
         dispatch(setCurrentUser(decoded));
+        history.push("/");
       })
       .catch((err) => {
         console.log("ERORR", err);

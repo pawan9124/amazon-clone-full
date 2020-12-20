@@ -2,7 +2,7 @@ import React from "react";
 import "./style.css";
 import Product from "../Product/Product";
 
-function index() {
+function index(props) {
   return (
     <div className="home">
       <div className="home__container">

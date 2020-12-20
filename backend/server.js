@@ -8,6 +8,7 @@ import cors from "cors";
 import keys from "./config/keys.js";
 import passportConfig from "./config/passport.js";
 import userAuth from "./routes/userAuth.js";
+import address from "./routes/address.js";
 
 /* App configuration */
 const app = express();
@@ -31,24 +32,25 @@ mongoose
 /* Passport config */
 passportConfig(passport);
 
-/* Cache the resource */
-let setCache = (req, res, next) => {
-  //here you can define period in second, this one is 5 minutes
-  const period = 60 * 5;
+// /* Cache the resource */
+// let setCache = (req, res, next) => {
+//   //here you can define period in second, this one is 5 minutes
+//   const period = 60 * 5;
 
-  //cache on the get request
-  if (req.method === "GET") {
-    res.set("Cache-control", `public, max-age=${period}`);
-  } else {
-    res.set("Cache-control", `no-stroe,no-cache,max-age=0`);
-  }
+//   //cache on the get request
+//   if (req.method === "GET") {
+//     res.set("Cache-control", `public, max-age=${period}`);
+//   } else {
+//     res.set("Cache-control", `no-stroe,no-cache,max-age=0`);
+//   }
 
-  next();
-};
-app.use(setCache);
+//   next();
+// };
+// app.use(setCache);
 
 /* API configuration */
 app.use("/api/userAuth", userAuth);
+app.use("/api/address", address);
 
 /* Static folder configuration */
 if (process.env.NODE_ENV === "production") {

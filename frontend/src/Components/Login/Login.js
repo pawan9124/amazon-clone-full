@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { Link, useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import validator from "validator";
 import { loginUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
@@ -27,7 +28,8 @@ function Login(props) {
         email,
         password,
       };
-      await props.loginUser(loginObj);
+      console.log("PROPS----------_>LOGIN", props);
+      await props.loginUser(loginObj, props.history);
       console.log("USER LOGGED IN SUCCESS");
     } else {
       setErrors(tempErrors);
@@ -108,4 +110,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser })(withRouter(Login));

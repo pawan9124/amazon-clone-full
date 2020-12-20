@@ -35,3 +35,6 @@
   display: flex;
   margin: 5px 0;
 }
+.product__star_gold {
+  color: #f0c14b;
+}
