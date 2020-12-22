@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./CreateProduct.css";
 import validator from "validator";
 import { createProduct } from "../../actions/sellerActions";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
 function CreateProduct(props) {
   const [title, setTitle] = useState("");
@@ -134,10 +134,17 @@ function CreateProduct(props) {
   }
   return (
     <TransitionsModal open={openModal} isParentChanged={isParentChanged}>
+      <Link to="/">
+        <img
+          className="header__logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
+          alt="logo"
+        />
+      </Link>
       <div className="createProduct">
         {/* Header of the modal */}
         <div className="createProduct__header">
-          <h3>Add Product to your store {imageFiles.toString()}</h3>
+          <h3>Add Product to your store </h3>
         </div>
         {/* form details */}
         <form action="" className="createProduct__form">

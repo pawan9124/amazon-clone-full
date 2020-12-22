@@ -21,11 +21,11 @@
 .createProduct__form_common > label {
   font-weight: 600;
   font-size: 12px;
-  padding: 5px;
+  padding: 3px;
 }
 .createProduct__form_common > input {
   height: 30px;
-  margin: 5px;
+  margin: 3px;
   outline-color: orange;
 }
 .createProduct__form_common > input[type="file"] {
@@ -41,6 +41,7 @@
 .imgPreview {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 .imgPreview img {
   height: 75px;
@@ -59,7 +60,7 @@
 }
 .createProduct__button {
   display: flex;
-  margin: 10px 10px 10px 0;
+  margin: 7px 7px 7px 0;
 }
 .createProduct__button > button {
   height: 30px;
