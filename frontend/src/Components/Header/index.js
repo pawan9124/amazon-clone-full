@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import "./Header.css";
 import { Link, useHistory } from "react-router-dom";
 import { useStateValue } from "../../StateProvider";
 import { auth } from "../../firebase";
+import { useSelector } from "react-redux";
+import CreateProduct from "../CreateProduct/CreateProduct";
 
 function Header() {
-  const [{ basket, user }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const history = useHistory();
-  console.log("USER---", user);
+  const userStore = useSelector((state) => state.auth);
+  const [open, setOpen] = useState(false);
+  let isChanged = false;
   const handleAuthentication = () => {
-    if (user) {
+    if (userStore.user.id) {
       auth.signOut();
       history.push("/login");
     }
+  };
+
+  const setModalState = (response) => {
+    isChanged = false;
+
+    setOpen(response);
+  };
+  const handleModalOpen = (e) => {
+    isChanged = !isChanged;
+    e.preventDefault();
+    setOpen(true);
   };
   return (
     <div className="header">
@@ -34,10 +49,10 @@ function Header() {
         <Link to={"/login"}>
           <div onClick={handleAuthentication} className="header__option">
             <span className="header__optionLineOne">
-              Hello {!user ? "Guest" : user?.name}
+              Hello {!userStore.user.id ? "Guest" : userStore?.user?.name}
             </span>
             <span className="header__optionLineTwo">
-              {user ? "Sign Out" : "Sign In"}
+              {userStore.user.id ? "Sign Out" : "Sign In"}
             </span>
           </div>
         </Link>
@@ -51,6 +66,22 @@ function Header() {
           <span className="header__optionLineOne">Your</span>
           <span className="header__optionLineTwo">Prime</span>
         </div>
+        {userStore.user.isSeller && (
+          <div className="header__option">
+            <span className="header__optionLineOne">As Seller</span>
+            <span
+              className="header__optionLineTwo header__openModal"
+              onClick={(e) => handleModalOpen(e)}
+            >
+              Add Product
+            </span>
+            <CreateProduct
+              isChanged={isChanged}
+              open={open}
+              setModalState={setModalState}
+            />
+          </div>
+        )}
         <Link to="/checkout">
           <div className="header__optionBasket">
             <ShoppingBasketIcon />

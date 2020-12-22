@@ -12,6 +12,7 @@ import Address from "../Address/Address";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import { getAddress } from "../../actions/addressAction";
+import { createOrders } from "../../actions/paymentActions";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,6 +23,7 @@ import StepContent from "@material-ui/core/StepContent";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,56 +87,65 @@ function Payment(props) {
   //function to get the address of the user
   useEffect(async () => {
     if (userStore.user.id) {
-      console.log("PIGBILLA_______________---");
       dispatchProps(getAddress(userStore.user.id));
     }
   }, [userStore]);
 
   useEffect(() => {
-    console.log("PIGIXXXXXX", addressStore);
     setUserAddress(addressStore.address);
   }, [addressStore]);
-  // useEffect(() => {
-  //   //generates the new stripe secret whenever the baseket is updated to send request for updated price
-  //   const getClientSecret = async () => {
-  //     const response = await axios({
-  //       method: "post",
-  //       url: `/payment/create?total=${parseInt(getBasketTotal(basket) * 100)}`,
-  //     });
-  //     setClientSecret(response.data.clientSecret);
-  //   };
-  //   getClientSecret();
-  // }, [basket]);
+  useEffect(() => {
+    //generates the new stripe secret whenever the baseket is updated to send request for updated price
+    const getClientSecret = async () => {
+      const response = await axios({
+        method: "post",
+        url: `/payments/createPaymentIntent?total=${parseInt(
+          getBasketTotal(basket) * 100
+        )}`,
+      });
+      setClientSecret(response.data.clientSecret);
+    };
+    getClientSecret();
+  }, [basket]);
   const handleSubmit = async (e) => {
     // do the fancy stripe changes
     e.preventDefault();
-    setProcessing(true);
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
-        console.log("PaymentINntet", paymentIntent);
-        //after payment confirmation
-        db.collection("users")
-          .doc(user?.uid)
-          .collection("orders")
-          .doc(clientSecret)
-          .set({
-            basket: basket,
-            amount: getBasketTotal(basket),
+    if (!selectedAddress) {
+      setProcessing(true);
+      const payload = await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        })
+        .then(({ paymentIntent }) => {
+          console.log("PaymentINntet", paymentIntent);
+          //after payment confirmation
+          const orderInfromation = {
+            user: userStore.user.id,
+            paymentId: paymentIntent.id,
+            paymentAmount: getBasketTotal(basket),
+            orders: basket,
+            addressId: selectedAddress,
             created: new Date(),
-          });
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
-        dispatch({
-          type: "EMPTY_BASKET",
+          };
+          dispatchProps(createOrders(orderInfromation, props.history));
+          // db.collection("users")
+          //   .doc(user?.uid)
+          //   .collection("orders")
+          //   .doc(clientSecret)
+          //   .set({
+          //     basket: basket,
+          //     amount: getBasketTotal(basket),
+          //     created: new Date(),
+          //   });
+          setSucceeded(true);
+          setError(null);
+          setProcessing(false);
         });
-        history.replace("/orders");
-      });
+    } else {
+      setError("Please select an address!");
+    }
   };
   const handleChange = (e) => {
     //set the disabled form
@@ -161,14 +172,16 @@ function Payment(props) {
               <h3>Delivery Address</h3>
             </div>
             <div className="payment__address">
-              <div className="payment__address_card">
-                <Link className="payment__link_address" to="/address">
-                  <IconButton>
-                    <AddIcon />
-                  </IconButton>
-                  Add Address
-                </Link>
-              </div>
+              {userStore.user.id && (
+                <div className="payment__address_card">
+                  <Link className="payment__link_address" to="/address">
+                    <IconButton>
+                      <AddIcon />
+                    </IconButton>
+                    Add Address
+                  </Link>
+                </div>
+              )}
               {useAddress.length > 0 &&
                 useAddress.map((userAdd) => (
                   <div
@@ -237,15 +250,21 @@ function Payment(props) {
                     thousandSeperator={true}
                     prefix={"$"}
                   />
-                  <button
-                    type="submit"
-                    disabled={processing || disabled || succeeded}
-                  >
-                    <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
-                  </button>
+                  {userStore.user.id ? (
+                    <button
+                      type="submit"
+                      disabled={processing || disabled || succeeded}
+                    >
+                      <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
+                    </button>
+                  ) : (
+                    <div className="payment__error">
+                      Please login to continue!
+                    </div>
+                  )}
                 </div>
                 {/* Errors */}
-                {error && <div>{error}</div>}
+                {error && <div className="payment__error">{error}</div>}
               </form>
             </div>
           </div>
@@ -277,14 +296,16 @@ function Payment(props) {
                       >
                         Back
                       </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={`${classes.button} payment__stepper_button`}
-                      >
-                        {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                      </Button>
+                      {activeStep !== steps.length - 1 && (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleNext}
+                          className={`${classes.button} payment__stepper_button`}
+                        >
+                          Next
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </StepContent>
@@ -311,4 +332,4 @@ Payment.propTypes = {
   getAddress: PropTypes.func.isRequired,
 };
 
-export default Payment;
+export default withRouter(Payment);

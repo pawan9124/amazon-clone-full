@@ -1,15 +1,15 @@
 import isEmpty from "../validations/isEmpty";
 
 const initialState = {
-  address: [],
+  orders: [],
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case "SET_ADDRESS":
+    case "SET_ORDERS":
       return {
         ...state,
-        address: action.payload,
+        orders: action.payload,
       };
     default:
       return state;

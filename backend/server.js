@@ -9,15 +9,24 @@ import keys from "./config/keys.js";
 import passportConfig from "./config/passport.js";
 import userAuth from "./routes/userAuth.js";
 import address from "./routes/address.js";
+import payments from "./routes/payments.js";
+import products from "./routes/products.js";
 
 /* App configuration */
 const app = express();
 const port = process.env.PORT || 4000;
 
 /* middlewares */
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 1000000,
+  })
+);
 app.use(bodyParser.json({ limit: "50mb", extended: true }));
 app.use(cors());
+app.use(express.static("imageUploads"));
 
 /* Db configuration */
 mongoose
@@ -51,6 +60,8 @@ passportConfig(passport);
 /* API configuration */
 app.use("/api/userAuth", userAuth);
 app.use("/api/address", address);
+app.use("/api/payments", payments);
+app.use("/api/products", products);
 
 /* Static folder configuration */
 if (process.env.NODE_ENV === "production") {

@@ -8,12 +8,19 @@ function Order({ order }) {
   return (
     <div className="order">
       <h2>Order</h2>
-      <p>{moment.unix(order.data.created).format("MMMM Do YYYY, h:mma")}</p>
-      <p className="order__id">
-        <small>{order.id}</small>
+      <p>{moment(order.created).format("MMMM Do YYYY, h:mma")}</p>
+      <p>
+        <strong>Delivery</strong>: {order.addressId.area}(
+        {order.addressId.phone}
+        ),
+        {order.addressId.city},{order.addressId.state},{order.addressId.country}
       </p>
-      {order.data.basket?.map((item) => (
+      <p className="order__id">
+        <small>{order.paymentId}</small>
+      </p>
+      {order.orders?.map((item) => (
         <CheckoutProduct
+          key={item.id}
           id={item.id}
           title={item.title}
           image={item.image}
@@ -31,7 +38,7 @@ function Order({ order }) {
           </>
         )}
         decimalScale={2}
-        value={order.data.amount}
+        value={order.paymentAmount}
         displayType={"text"}
         thousandSeperator={true}
         prefix={"$"}

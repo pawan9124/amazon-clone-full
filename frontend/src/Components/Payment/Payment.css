@@ -105,3 +105,10 @@
 .MuiStepIcon-completed {
   color: #f0c14b !important;
 }
+.payment__priceContainer > p {
+  margin: 7px 0;
+}
+.payment__error {
+  color: red;
+  font-weight: 600;
+}

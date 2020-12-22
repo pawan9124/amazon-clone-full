@@ -49,6 +49,7 @@ export const loginUser = (userData, history) => (dispatch) => {
           avatar: decoded.avatar,
           id: decoded.id,
           name: decoded.name,
+          isSeller: decoded.isSeller,
         };
         dispatch({
           type: "SET_USER",
