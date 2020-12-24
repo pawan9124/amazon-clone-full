@@ -54,10 +54,8 @@ router.post(
   upload.array("image", 6),
   //   passport.authentication("jwt", { session: false }),
   async (req, res) => {
-    console.log("REQQQQQq_--------", req.files);
     try {
       let imageArray = [];
-      console.log("RE!QfILE----", req.files, req.file);
       if (req.files.length > 0) {
         for (let i = 0; i < req.files.length; i++) {
           imageArray.push({ src: req.files[i].path });
@@ -73,5 +71,49 @@ router.post(
     }
   }
 );
+/*
+  @routes api/products/getAllProducts
+  @public
+ */
+
+router.get("/getAllProducts", async (req, res) => {
+  try {
+    const allProducts = await Product.find({});
+    res.status(200).json(allProducts);
+  } catch (error) {
+    console.log("Error", error);
+    res.status(500).json(error);
+  }
+});
+
+/* 
+  @routes api/products/getSingleProduct
+  @public
+*/
+router.get("/getSingleProduct", async (req, res) => {
+  try {
+    console.log("req=x=x=x=x=x=x=x=,", req.query);
+    const singleProduct = await Product.findById(req.query.id);
+    res.status(200).json(singleProduct);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+/* 
+  @routes api/products/search
+  @public
+
+*/
+
+router.get("/search", async (req, res) => {
+  try {
+    console.log("params", req.query);
+    const response = await Product.find({ $text: { $search: req.query.text } });
+    res.status(200).json(response);
+  } catch (error) {
+    res.statu(500).json(error);
+  }
+});
 
 export default router;

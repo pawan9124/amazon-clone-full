@@ -9,12 +9,16 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  keywords: {
+    type: String,
+    required: true,
+  },
   image: {
     type: Array,
     required: true,
   },
   rating: {
-    type: String,
+    type: Number,
   },
   seller: {
     type: mongoose.Schema.Types.ObjectId,
@@ -27,4 +31,10 @@ const ProductSchema = new mongoose.Schema({
   },
 });
 
+ProductSchema.index({
+  title: "text",
+  keywords: "text",
+  seller: "text",
+  storeName: "text",
+});
 export default mongoose.model("products", ProductSchema);
