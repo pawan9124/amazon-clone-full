@@ -61,7 +61,6 @@ function Payment(props) {
 
   //Use select works as mapStateToProps
   const userStore = useSelector((state) => {
-    console.log("Satete------------>", state);
     return state.auth;
   });
   const addressStore = useSelector((state) => state.address);

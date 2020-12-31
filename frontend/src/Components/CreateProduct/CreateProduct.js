@@ -18,6 +18,7 @@ function CreateProduct(props) {
   const [showPreview, setShowPreview] = useState(true);
   const [openModal, setOpenModal] = useState(props.open);
   const [isParentChanged, setIsParentChanged] = useState(false);
+  const [keywords, setKeywords] = useState([]);
 
   //Get the user detail from the store
   const user = useSelector((state) => state.auth.user);
@@ -48,6 +49,8 @@ function CreateProduct(props) {
       fd.append("price", price);
       fd.append("storeName", storeName);
       fd.append("seller", user.id);
+      fd.append("keywords", keywords);
+      fd.append("rating", rating);
       //Server side don't accept array of formdata so the loop is calling
       for (let i = 0; i < sentImageFiles.length; i++) {
         fd.append("image", sentImageFiles[i][0]);
@@ -172,6 +175,21 @@ function CreateProduct(props) {
             {errors.price && (
               <small className="createProduct__validationErrors">
                 {errors.price}
+              </small>
+            )}
+          </div>
+          <div className="createProduct__form_common">
+            <label htmlFor="">Enter Product Keywords</label>
+            <input
+              type="text"
+              value={keywords}
+              onChange={(e) => {
+                setKeywords(e.target.value);
+              }}
+            />
+            {errors.keywords && (
+              <small className="createProduct__validationErrors">
+                {errors.keywords}
               </small>
             )}
           </div>

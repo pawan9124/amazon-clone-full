@@ -25,6 +25,7 @@
   padding: 10px;
   border: none;
   width: 100%;
+  outline-color: orange;
 }
 
 .header__searchIcon {
@@ -64,5 +65,25 @@
   margin-right: 10px;
 }
 .header__openModal {
+  cursor: pointer;
+}
+.header__search {
+  position: relative;
+}
+.header__search > ul {
+  background-color: white;
+  width: 94.5%;
+  list-style: none;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 33px;
+  /* bottom: -100px; */
+}
+.header__search > ul > li {
+  background-color: white;
+  width: 100%;
+  /* border: 1px solid grey; */
+  padding: 5px;
   cursor: pointer;
 }

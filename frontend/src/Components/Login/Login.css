@@ -1,9 +1,13 @@
 .login {
   background-color: white;
+  background-image: url("https://res.cloudinary.com/ducuktwjm/image/upload/v1608888845/28677-min_sierva.jpg");
+  background-size: cover;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-position: center;
   align-items: center;
+  overflow: scroll;
 }
 .login__logo {
   margin-top: 20px;
@@ -21,6 +25,7 @@
   flex-direction: column;
   border-radius: 5px;
   border: 1px solid lightgray;
+  background-color: white;
   padding: 20px;
 }
 

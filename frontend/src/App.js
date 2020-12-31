@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Header from "./Components/Header";
-import Home from "./Components/Home";
+import Home from "./Components/Home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Checkout from "./Components/Checkout/Checkout";
 import Login from "./Components/Login/Login";
@@ -18,6 +18,7 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 import Address from "./Components/Address/Address";
+import ProductPreview from "./Components/ProductPreview/ProductPreview";
 
 const promise = loadStripe(
   "pk_test_51HxeDPCFRg2ffIwMZSlrnGVUww5BhkvT4Y9mknBi45BqugZySPdBLX557tKk6wpbpS2TBFDgjLd9CmI4mX0AmhMk00GlGDiKY3"
@@ -89,6 +90,11 @@ function App() {
               <Header />
               <Address />
             </Route>
+            <Route path="/product_preview/:id">
+              <Header />
+              <ProductPreview />
+            </Route>
+
             <Route path="/checkout">
               <Header />
               <Checkout />

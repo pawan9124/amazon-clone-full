@@ -35,7 +35,7 @@
   font-size: 12px;
   color: red;
 }
-.makeStyles-modal-1 {
+div[class*="makeStyles-modal"] {
   overflow: scroll;
 }
 .imgPreview {

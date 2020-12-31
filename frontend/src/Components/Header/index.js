@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import "./Header.css";
@@ -7,13 +7,33 @@ import { useStateValue } from "../../StateProvider";
 import { auth } from "../../firebase";
 import { useSelector } from "react-redux";
 import CreateProduct from "../CreateProduct/CreateProduct";
+import axios from "../../axios";
+import { withRouter } from "react-router-dom";
 
-function Header() {
+function Header(props) {
   const [{ basket }, dispatch] = useStateValue();
   const history = useHistory();
   const userStore = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
+  const [autoComplete, setAutoComplete] = useState([]);
   let isChanged = false;
+
+  //provide event listenere
+  useEffect(() => {
+    document.addEventListener("click", function () {
+      if (document.getElementById("autocomplete") !== null) {
+        document.getElementById("autocomplete").style.display = "none";
+      }
+    });
+    return () => {
+      if (document.getElementById("autocomplete") !== null) {
+        document.removeEventListener("click", function () {
+          document.getElementById("autocomplete").style.display = "none";
+        });
+      }
+    };
+  }, []);
+
   const handleAuthentication = () => {
     if (userStore.user.id) {
       auth.signOut();
@@ -31,6 +51,25 @@ function Header() {
     e.preventDefault();
     setOpen(true);
   };
+
+  //Handling the seraching of the product and listing in the list style
+  const handleSearchProduct = async (e) => {
+    //Calling the search for the getting the list of items suggestion
+    const response = await axios.get("/products/search", {
+      params: { text: e.target.value },
+    });
+    console.log("RSPONE", response);
+    if (response.data.length > 0) {
+      document.getElementById("autocomplete").style.display = "block";
+      setAutoComplete(response.data);
+    }
+  };
+  //Handling the auto complete
+  const handleAutoComplete = (e) => {
+    console.log("E---target----", e.target.id);
+    const currentId = e.target.id;
+    props.history.push(`/product_preview/${currentId}`);
+  };
   return (
     <div className="header">
       <Link to="/">
@@ -42,7 +81,19 @@ function Header() {
       </Link>
 
       <div className="header__search">
-        <input type="text" className="header__searchInput" />
+        <input
+          type="text"
+          className="header__searchInput"
+          onChange={handleSearchProduct}
+        />
+        <ul id="autocomplete">
+          {autoComplete.length > 0 &&
+            autoComplete.map((sug) => (
+              <li key={sug._id} id={sug._id} onClick={handleAutoComplete}>
+                {sug.keywords}
+              </li>
+            ))}
+        </ul>
         <SearchIcon className="header__searchIcon" />
       </div>
       <div className="header__nav">
@@ -95,4 +146,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default withRouter(Header);

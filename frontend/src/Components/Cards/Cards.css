@@ -1,0 +1,73 @@
+/* Four Images CSS */
+
+.cards4image {
+  height: fit-content;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  background-color: white;
+  padding: 15px;
+  z-index: 1;
+  margin: 10px;
+  max-height: 400px;
+  min-height: 100px;
+  align-items: center;
+}
+.cards4image > h3 {
+  font-weight: 400;
+  font-size: 20px;
+}
+.card4image__sections {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  align-items: center;
+}
+.cards4image__images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.card4image__sections > img {
+  height: 125px;
+  width: 116px;
+  cursor: pointer;
+}
+.card4image__sections > p {
+  font-size: 14px;
+  padding: 5px;
+}
+.ad_displayCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.addisplaycard {
+  background-color: white;
+  z-index: 1;
+  height: 150px;
+  margin: 5px;
+  /* padding: 5px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.addisplaycard__title > h3 {
+  font-weight: 400;
+  font-size: 20px;
+}
+.addisplaycar__content > p {
+  font-size: 12px;
+  margin: 10px;
+}
+.addisplaycar__content > img {
+  height: 155px;
+  width: 100%;
+}
+.addisplaycard__link {
+  font-size: 14px;
+  text-decoration: none;
+}

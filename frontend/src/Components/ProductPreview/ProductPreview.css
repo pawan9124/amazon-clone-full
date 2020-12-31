@@ -1,0 +1,85 @@
+.productPreview {
+  display: flex;
+  background: white;
+  border-radius: 2px;
+  height: 100vh;
+  overflow: scroll;
+}
+.productPreview_imagePreview {
+  margin: 20px;
+}
+.productPreview_image_thumbnail {
+  list-style: none;
+}
+.productPreview_image_thumbnail li > img {
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.productPreview_image_thumbnail li > img:hover {
+  border: 1px solid orange;
+}
+.productPreview_largeImage {
+  margin: 20px;
+}
+.productPreview_largeImage img {
+  height: 500px;
+  width: 500px;
+}
+.productPreview__details {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+.productPreview__details > h3 {
+  font-size: 20px;
+  font-weight: 600px;
+}
+.productPreview__details > p {
+  margin: 10px;
+  color: #8b8282;
+}
+.productPreview__details .text {
+  color: black;
+  margin-left: 5px;
+}
+.productPreview__details .gold {
+  color: gold;
+  margin-left: 5px;
+}
+.productPreview__details > div {
+  margin: 10px;
+}
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+.productPreview__price .price {
+  color: #b12704 !important;
+  font-size: 18px;
+}
+.productPreview__addToBasket button {
+  background: #f0c14b;
+  border-radius: 2px;
+  width: 100%;
+  height: 30px;
+  border: 1px solid;
+  margin-top: 10px;
+  border-color: #a88734 #9c7e31 #846a29;
+}
+.productPreview_offers table {
+  border-collapse: collapse;
+}
+.productPreview_offers > table > tr {
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.productPreview_offers > table > tr > td {
+  padding: 0 10px;
+  font-size: 14px;
+}
+.productPreview_offers > table > tr > td > span {
+  color: #b12704;
+}
