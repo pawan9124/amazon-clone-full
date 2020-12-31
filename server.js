@@ -26,7 +26,7 @@ app.use(
 );
 app.use(bodyParser.json({ limit: "50mb", extended: true }));
 app.use(cors());
-app.use(express.static("imageUploads"));
+// app.use(express.static("imageUploads"));
 
 /* Db configuration */
 mongoose
@@ -65,10 +65,10 @@ app.use("/api/products", products);
 
 /* Static folder configuration */
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/dist"));
+  app.use(express.static("client/build"));
 
   app.use("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
 
