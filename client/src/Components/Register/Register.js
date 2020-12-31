@@ -26,12 +26,6 @@ function Register(props) {
     if (validator.isEmpty(mobile) || !validator.isInt(mobile)) {
       tempErrors.mobile = "Please enter mobile";
     }
-    console.log(
-      "!validator.isEmail(email)",
-      !validator.isEmail(email),
-      "\nvalidator.isEmail(email)",
-      validator.isEmail(email)
-    );
     if (validator.isEmpty(email) || !validator.isEmail(email)) {
       tempErrors.email = "Please enter email";
     }
@@ -41,7 +35,6 @@ function Register(props) {
     if (password && password.split("").length < 6) {
       tempErrors.password = "Password length should be greater than 6";
     }
-    console.log("tempErrors", tempErrors);
     if (Object.keys(tempErrors).length === 0) {
       const obj = {
         name: name,

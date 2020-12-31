@@ -2,7 +2,6 @@ import React from "react";
 import "./Cards.css";
 
 function FourImageCards(props) {
-  console.log("PORPS--", props);
   return (
     <div className="cards4image">
       <h3>{props.title}</h3>

@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "axios";
 
 //Register user
 export const addAddress = (addressData, history) => (dispatch) => {
@@ -33,7 +33,6 @@ export const addAddress = (addressData, history) => (dispatch) => {
 };
 
 export const getAddress = (userId) => (dispatch) => {
-  console.log("userIdXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", userId);
   try {
     axios
       .get("/address/get", {
@@ -42,7 +41,6 @@ export const getAddress = (userId) => (dispatch) => {
         },
       })
       .then((res) => {
-        console.log("RESPONSE---------", res);
         dispatch({
           type: "SET_ADDRESS",
           payload: res.data,

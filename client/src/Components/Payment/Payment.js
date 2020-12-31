@@ -7,7 +7,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "../../reducer";
 import { db } from "../../firebase";
-import axios from "../../axios";
+import axios from "axios";
 import Address from "../Address/Address";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
@@ -118,7 +118,6 @@ function Payment(props) {
           },
         })
         .then(({ paymentIntent }) => {
-          console.log("PaymentINntet", paymentIntent);
           //after payment confirmation
           const orderInfromation = {
             user: userStore.user.id,
@@ -154,7 +153,6 @@ function Payment(props) {
 
   //Select address card
   const selectAddressCard = (e) => {
-    console.log("e.--", e.target, e.target.id);
     setSelectedAddress(e.target.id);
   };
 
@@ -272,7 +270,6 @@ function Payment(props) {
         return "Unknown step";
     }
   }
-  console.log("useAddress-------------", useAddress);
   return (
     <div className="payment">
       <div className="payment__container">

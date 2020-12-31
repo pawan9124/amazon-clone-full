@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "axios";
 
 //Register user
 export const createProduct = (productDetail, history) => (dispatch) => {

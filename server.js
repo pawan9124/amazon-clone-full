@@ -14,7 +14,7 @@ import products from "./routes/products.js";
 
 /* App configuration */
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 /* middlewares */
 app.use(
@@ -58,10 +58,10 @@ passportConfig(passport);
 // app.use(setCache);
 
 /* API configuration */
-app.use("/api/userAuth", userAuth);
-app.use("/api/address", address);
-app.use("/api/payments", payments);
-app.use("/api/products", products);
+app.use("/userAuth", userAuth);
+app.use("/address", address);
+app.use("/payments", payments);
+app.use("/products", products);
 
 /* Static folder configuration */
 if (process.env.NODE_ENV === "production") {

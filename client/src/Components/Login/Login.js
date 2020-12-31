@@ -28,16 +28,13 @@ function Login(props) {
         email,
         password,
       };
-      console.log("PROPS----------_>LOGIN", props);
       await props.loginUser(loginObj, props.history);
-      console.log("USER LOGGED IN SUCCESS");
     } else {
       setErrors(tempErrors);
     }
     //Some fancy firebase login shitttt......
   };
   useEffect(() => {
-    console.log("PROPS----------_>", props);
     if (Object.keys(props.errors).length > 0) {
       setErrors(props.errors);
     }

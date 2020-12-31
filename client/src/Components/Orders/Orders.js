@@ -14,7 +14,6 @@ function Orders() {
   const userData = useSelector((state) => state.auth);
   const orderData = useSelector((state) => state.orders);
   const dispatchProps = useDispatch();
-  console.log("ORDERSDATAT", orderData, "USERDAT", userData);
   useEffect(() => {
     if (userData.user.id) {
       dispatchProps(getOrders(userData.user.id));
@@ -24,10 +23,8 @@ function Orders() {
   }, [userData.user]);
 
   useEffect(() => {
-    console.log("orderdata", orderData);
     setOrders(orderData.orders);
   }, [orderData]);
-  console.log("ORDERS----------------_>", orders);
   return (
     <div className="orders">
       <h1>Your Orders</h1>

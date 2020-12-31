@@ -1,4 +1,4 @@
-import axios from "../axios";
+import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
@@ -31,12 +31,10 @@ export const registerUser = (userData, history) => (dispatch) => {
 
 //Login - Get the User token and save in the local storage
 export const loginUser = (userData, history) => (dispatch) => {
-  console.log("UserData---->", userData);
   try {
     axios
       .post("/userAuth/login", userData)
       .then((res) => {
-        console.log("login response", res);
         //Save to localStorage
         const { token } = res.data;
         localStorage.setItem("jwtToken", token);

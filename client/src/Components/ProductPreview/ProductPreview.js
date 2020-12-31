@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactImageMagnify from "react-image-magnify";
 import { withRouter } from "react-router-dom";
-import axios from "../../axios";
+import axios from "axios";
 import { useStateValue } from "../../StateProvider";
 import "./ProductPreview.css";
 
@@ -10,9 +10,7 @@ function ProductPreview(props) {
   const [product, setProduct] = useState({});
   //Use of context api
   const [{ basket }, dispatch] = useStateValue();
-  console.log("basket", basket);
   const addToBasket = () => {
-    console.log("CLICKEd");
     //dispatch the item into the data layer
     dispatch({
       type: "ADD_TO_BASKET",
@@ -27,19 +25,16 @@ function ProductPreview(props) {
   };
 
   useEffect(async () => {
-    console.log("props.match.params.id", props.match.params.id);
     try {
       const response = await axios.get("/products/getSingleProduct", {
         params: { id: props.match.params.id },
       });
-      console.log("response", response);
       if (response.data === null) {
         props.history.push("/");
       }
       setProduct(response.data);
       setChangeImage(response.data.image[0].src);
     } catch (erorr) {
-      console.log("error", erorr);
       props.history.push("/error");
     }
   }, [props.match.params.id]);

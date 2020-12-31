@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import Product from "../Product/Product";
-import axios from "../../axios";
+import axios from "axios";
 import Carousel from "../Carousel/Carousel";
 import FourImageCards from "../Cards/FourImageCards";
 import AdDisplayCard from "../Cards/AdDisplayCard";
@@ -112,19 +112,15 @@ function Home(props) {
     axios
       .get("/products/getAllProducts")
       .then((response) => {
-        console.log("response", response);
         if (response.data) {
           setProducts(response.data);
         }
       })
-      .catch((error) => {
-        console.log("ERROR", error);
-      });
+      .catch((error) => {});
   }, []);
   return (
     <div className="home">
       <div className="home__container">
-        {console.log("FOURSE", fourCardData.firstCard)}
         <Carousel />
         {/* <img
           alt="home_images"

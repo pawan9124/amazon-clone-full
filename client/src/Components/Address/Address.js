@@ -22,8 +22,6 @@ function Address(props) {
   useEffect(async () => {
     const csccountries = await csc.getAllCountries();
     setCountries(csccountries);
-
-    console.log("allCountries", csccountries);
   }, []);
 
   const handleCountryChange = (e) => {
@@ -43,7 +41,6 @@ function Address(props) {
   const saveAddress = (e) => {
     e.preventDefault();
     const tempErrors = {};
-    console.log("PORS", props);
 
     if (validator.isEmpty(country)) {
       tempErrors.country = "Please select a country";
@@ -60,7 +57,6 @@ function Address(props) {
     if (validator.isEmpty(area)) {
       tempErrors.area = "Please enter an area";
     }
-    console.log("TEMPERROR", tempErrors);
     if (Object.keys(tempErrors).length === 0) {
       const sendObj = {
         user: props.auth.user.id,

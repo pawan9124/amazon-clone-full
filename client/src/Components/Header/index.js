@@ -7,7 +7,7 @@ import { useStateValue } from "../../StateProvider";
 import { auth } from "../../firebase";
 import { useSelector } from "react-redux";
 import CreateProduct from "../CreateProduct/CreateProduct";
-import axios from "../../axios";
+import axios from "axios";
 import { withRouter } from "react-router-dom";
 
 function Header(props) {
@@ -58,7 +58,6 @@ function Header(props) {
     const response = await axios.get("/products/search", {
       params: { text: e.target.value },
     });
-    console.log("RSPONE", response);
     if (response.data.length > 0) {
       document.getElementById("autocomplete").style.display = "block";
       setAutoComplete(response.data);
@@ -66,7 +65,6 @@ function Header(props) {
   };
   //Handling the auto complete
   const handleAutoComplete = (e) => {
-    console.log("E---target----", e.target.id);
     const currentId = e.target.id;
     props.history.push(`/product_preview/${currentId}`);
   };
