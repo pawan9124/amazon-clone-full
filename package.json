@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server.js",
-    "client": "npm start --prefix client",
+    "server": "PORT=4000 node server.js",
+    "client": "PORT=3001 npm start --prefix client",
     "build": "npm run build --prefix client",
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
