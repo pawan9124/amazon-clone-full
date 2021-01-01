@@ -109,7 +109,7 @@ function Payment(props) {
   const handleSubmit = async (e) => {
     // do the fancy stripe changes
     e.preventDefault();
-    if (!selectedAddress) {
+    if (selectedAddress) {
       setProcessing(true);
       const payload = await stripe
         .confirmCardPayment(clientSecret, {
@@ -270,6 +270,8 @@ function Payment(props) {
         return "Unknown step";
     }
   }
+
+  console.log("selectedAddress====", selectedAddress);
   return (
     <div className="payment">
       <div className="payment__container">
