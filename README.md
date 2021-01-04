@@ -11,3 +11,9 @@ Clone project of amazon adding features to add, search and make realtime payment
 ![CSS3](https://img.shields.io/badge/-CSS3-black?logo=css3)
 
 # Screenshot
+![AmazonGif](https://github.com/pawan9124/amazon-clone-full/blob/master/ezgif.com-video-to-gif.gif)
+![AmazonDash](https://github.com/pawan9124/amazon-clone-full/blob/master/amazon-dashboard.png)
+![AmazonLogin](https://github.com/pawan9124/amazon-clone-full/blob/master/amazon-login.png)
+![AmazonProduct](https://github.com/pawan9124/amazon-clone-full/blob/master/amazon-product.png)
+![AmazonCheckout](https://github.com/pawan9124/amazon-clone-full/blob/master/amazon-checkout.png)
+![AmazonOrders](https://github.com/pawan9124/amazon-clone-full/blob/master/amazon-orders.png)
