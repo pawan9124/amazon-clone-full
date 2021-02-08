@@ -6,7 +6,6 @@ import { Link, useHistory } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getBasketTotal } from "../../reducer";
-import { db } from "../../firebase";
 import axios from "axios";
 import Address from "../Address/Address";
 import IconButton from "@material-ui/core/IconButton";
@@ -24,6 +23,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
+import path from "path";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -83,6 +83,8 @@ function Payment(props) {
     setActiveStep(0);
   };
 
+  //funciton to load the country list json prefetch
+
   //function to get the address of the user
   useEffect(async () => {
     if (userStore.user.id) {
@@ -98,7 +100,7 @@ function Payment(props) {
     const getClientSecret = async () => {
       const response = await axios({
         method: "post",
-        url: `/payments/createPaymentIntent?total=${parseInt(
+        url: `/api/payments/createPaymentIntent?total=${parseInt(
           getBasketTotal(basket) * 100
         )}`,
       });

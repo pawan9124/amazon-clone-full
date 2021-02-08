@@ -26,7 +26,7 @@ function ProductPreview(props) {
 
   useEffect(async () => {
     try {
-      const response = await axios.get("/products/getSingleProduct", {
+      const response = await axios.get("/api/products/getSingleProduct", {
         params: { id: props.match.params.id },
       });
       if (response.data === null) {

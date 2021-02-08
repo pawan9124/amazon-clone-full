@@ -77,7 +77,7 @@ function Carousel() {
       enableMouseEvents
     >
       {tutorialSteps.map((step, index) => (
-        <div key={step.label}>
+        <div key={step.imgPath}>
           {Math.abs(activeStep - index) <= 2 ? (
             <img className="home__image" src={step.imgPath} alt={step.label} />
           ) : null}

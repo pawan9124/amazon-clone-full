@@ -4,7 +4,7 @@ import axios from "axios";
 export const createProduct = (productDetail, history) => (dispatch) => {
   try {
     axios
-      .post("/products/create", productDetail)
+      .post("/api/products/create", productDetail)
       .then((res) => {
         history.push("/");
       })

@@ -4,7 +4,6 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import "./Header.css";
 import { Link, useHistory } from "react-router-dom";
 import { useStateValue } from "../../StateProvider";
-import { auth } from "../../firebase";
 import { useSelector } from "react-redux";
 import CreateProduct from "../CreateProduct/CreateProduct";
 import axios from "axios";
@@ -36,7 +35,6 @@ function Header(props) {
 
   const handleAuthentication = () => {
     if (userStore.user.id) {
-      auth.signOut();
       history.push("/login");
     }
   };
@@ -55,9 +53,13 @@ function Header(props) {
   //Handling the seraching of the product and listing in the list style
   const handleSearchProduct = async (e) => {
     //Calling the search for the getting the list of items suggestion
-    const response = await axios.get("/products/search", {
+    const response = await axios.get("/api/products/search", {
       params: { text: e.target.value },
     });
+    console.log(
+      "HEADER &&&$$$$ IS THE RESPONSE------------------------------------------->",
+      response
+    );
     if (response.data.length > 0) {
       document.getElementById("autocomplete").style.display = "block";
       setAutoComplete(response.data);

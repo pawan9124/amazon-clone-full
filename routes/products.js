@@ -79,6 +79,9 @@ router.post(
 router.get("/getAllProducts", async (req, res) => {
   try {
     const allProducts = await Product.find({});
+    console.log(
+      "HERE INSIDE THE TECH OF THE TECHH____________________---------------------------"
+    );
     res.status(200).json(allProducts);
   } catch (error) {
     console.log("Error", error);

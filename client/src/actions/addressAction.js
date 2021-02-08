@@ -5,7 +5,7 @@ export const addAddress = (addressData, history) => (dispatch) => {
   return new Promise((resolve, reject) => {
     try {
       axios
-        .post("/address/create", addressData)
+        .post("/api/address/create", addressData)
         .then((res) => {
           dispatch({
             type: "SET_ADDRESS",
@@ -35,7 +35,7 @@ export const addAddress = (addressData, history) => (dispatch) => {
 export const getAddress = (userId) => (dispatch) => {
   try {
     axios
-      .get("/address/get", {
+      .get("/api/address/get", {
         params: {
           userId: userId,
         },

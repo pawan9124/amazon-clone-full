@@ -5,7 +5,6 @@ import Home from "./Components/Home/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Checkout from "./Components/Checkout/Checkout";
 import Login from "./Components/Login/Login";
-import { auth } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import Payment from "./Components/Payment/Payment";
 import { loadStripe } from "@stripe/stripe-js";
@@ -19,6 +18,7 @@ import { setCurrentUser, logoutUser } from "./actions/authActions";
 import jwt_decode from "jwt-decode";
 import Address from "./Components/Address/Address";
 import ProductPreview from "./Components/ProductPreview/ProductPreview";
+import { io } from "socket.io-client";
 
 const promise = loadStripe(
   "pk_test_51HxeDPCFRg2ffIwMZSlrnGVUww5BhkvT4Y9mknBi45BqugZySPdBLX557tKk6wpbpS2TBFDgjLd9CmI4mX0AmhMk00GlGDiKY3"
@@ -26,24 +26,18 @@ const promise = loadStripe(
 
 function App() {
   const [{}, dispatch] = useStateValue();
+
   useEffect(() => {
-    //Will only run once when the app component loads....
-    // auth.onAuthStateChanged((authUser) => {
-    //   console.log(`THe user is`, authUser);
-    //   if (authUser) {
-    //     //the use just logged in / the was user logged in
-    //     dispatch({
-    //       type: "SET_USER",
-    //       user: authUser,
-    //     });
-    //   } else {
-    //     // the user is logged out
-    //     dispatch({
-    //       type: "SET_USER",
-    //       user: null,
-    //     });
-    //   }
-    // });
+    /* Setting the socket io app */
+    const socket = io("http://localhost:7000/api/socket", {
+      transports: ["websocket", "polling", "flashsocket"],
+    });
+    socket.on("connect", () => {
+      console.log("CONNECTION SOCK", socket.id); // x8WIv7-mJelg7on_ALbx
+    });
+    socket.on("productChange", (productData) => {
+      console.log("Product Data----------XXXXXXfff--------->", productData);
+    });
 
     //check the authetication of the user
     if (localStorage.jwtToken) {

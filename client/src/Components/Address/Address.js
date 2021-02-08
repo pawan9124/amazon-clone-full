@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Address.css";
-import csc from "country-state-city";
+// import csc from "country-state-city";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { addAddress } from "../../actions/addressAction";
@@ -18,13 +18,17 @@ function Address(props) {
   const [area, setArea] = useState("");
   const [landmark, setLandMark] = useState("");
   const [errors, setErrors] = useState({});
+  const [csc, setCSC] = useState({});
 
   useEffect(async () => {
-    const csccountries = await csc.getAllCountries();
+    const { default: lists } = await import("country-state-city");
+    const csccountries = await lists.getAllCountries();
     setCountries(csccountries);
+    setCSC(lists);
   }, []);
 
   const handleCountryChange = (e) => {
+    console.log("CSC----", csc);
     const countryId = e.target.selectedOptions[0].id;
     const statesOfCountry = csc.getStatesOfCountry(countryId);
     setCountry(e.target.value);

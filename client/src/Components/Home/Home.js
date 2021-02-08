@@ -110,13 +110,19 @@ function Home(props) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
-      .get("/products/getAllProducts")
+      .get("/api/products/getAllProducts")
       .then((response) => {
+        console.log(
+          "HEADER &&&$$$$ IS THE RESPONSE------------------------------------------->",
+          response
+        );
         if (response.data) {
           setProducts(response.data);
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log("error", error);
+      });
   }, []);
   return (
     <div className="home">
@@ -147,6 +153,7 @@ function Home(props) {
         {products.length > 0 &&
           products.map((product) => (
             <Product
+              key={product._id}
               id={product._id}
               title={product.title}
               price={product.price}

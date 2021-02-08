@@ -4,7 +4,7 @@ import axios from "axios";
 export const createOrders = (ordersDetails, history) => (dispatch) => {
   try {
     axios
-      .post("/payments/createOrders", ordersDetails)
+      .post("/api/payments/createOrders", ordersDetails)
       .then((res) => {
         dispatch({
           type: "SET_ORDERS",
@@ -33,7 +33,7 @@ export const createOrders = (ordersDetails, history) => (dispatch) => {
 export const getOrders = (userId) => (dispatch) => {
   try {
     axios
-      .get("/payments/getOrders", { params: { userId: userId } })
+      .get("/api/payments/getOrders", { params: { userId: userId } })
       .then((res) => {
         dispatch({
           type: "SET_ORDERS",
