@@ -36,6 +36,7 @@ app.use(cors());
 // app.use(express.static("imageUploads"));
 
 /* Db configuration */
+console.log("KESY", keys);
 mongoose
   .connect(keys.mongoURI, {
     useCreateIndex: true,
