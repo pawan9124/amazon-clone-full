@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.css";
 import Product from "../Product/Product";
 import axios from "axios";
@@ -46,7 +46,7 @@ const fourCardData = {
       {
         link:
           "https://images-na.ssl-images-amazon.com/images/G/01/AmazonExports/Fuji/2019/February/Dashboard/computer120x._SY85_CB468850970_.jpg",
-        title: "Computer & Accessories",
+        title: "Computer",
       },
       ,
       {
@@ -105,25 +105,65 @@ const adDisplayData = {
       "https://m.media-amazon.com/images/G/31/img19/AMS/Houseads/Laptops-Sept2019._CB436595915_.jpg",
   },
 };
-
+let curretP = ''
+let isParsed = false;
 function Home(props) {
   const [products, setProducts] = useState([]);
-  useEffect(() => {
+  const [currentPointer, setcurrentPointer] = useState('');
+  const [isProductFetched, setIsProductFetched] = useState(false);
+  const [numOfReq, setNumOfReq] = useState(0);
+  //using of the reference is to get the current value of the state inside the load more
+  //cause the loadmore is called in the event listener and when the listener is set its closure
+  //are bound to the initial state so reference used to give the reference to the current state inside load more
+  const productsRef = useRef({});
+  productsRef.current = products;
+  const numOfReqRef = useRef({});
+  numOfReqRef.current = numOfReq;
+  
+
+  const fetchProducts= ()=>{
+    console.error("currentPointer",curretP)
     axios
-      .get("/api/products/getAllProducts")
+      .get(`/api/products/getAllProducts?currentPointer=${curretP}`)
       .then((response) => {
         console.log(
           "HEADER &&&$$$$ IS THE RESPONSE------------------------------------------->",
           response
         );
         if (response.data) {
-          setProducts(response.data);
+          setProducts([...productsRef.current,...response.data]);
+          setcurrentPointer(response.data.pop()._id)
+          curretP = response.data.pop()._id;
+          setNumOfReq(numOfReqRef.current+1)
         }
       })
       .catch((error) => {
         console.log("error", error);
       });
+  }
+  const loadMore = async ()=>{
+      if(window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight){
+        if(!isParsed && numOfReqRef.current <= 2){
+          await fetchProducts();
+          isParsed = true; // you can use the ref here if you want instead of global object
+        }
+      } 
+  
+      if(window.innerHeight + document.documentElement.scrollTop > document.scrollingElement.scrollHeight+5 ||
+        window.innerHeight + document.documentElement.scrollTop < document.scrollingElement.scrollHeight-5 
+        ){
+          isParsed = false;
+      }
+  }
+  useEffect(() => {
+    fetchProducts();
+    window.addEventListener('scroll',loadMore)
+    return ()=>{
+      window.removeEventListener('scroll', loadMore);
+    }
   }, []);
+
+  // console.error("CURRENT HEADER_---x-x-x-x-",currentPointer)
   return (
     <div className="home">
       <div className="home__container">

@@ -29,15 +29,15 @@ function App() {
 
   useEffect(() => {
     /* Setting the socket io app */
-    const socket = io("http://localhost:7000/api/socket", {
-      transports: ["websocket", "polling", "flashsocket"],
-    });
-    socket.on("connect", () => {
-      console.log("CONNECTION SOCK", socket.id); // x8WIv7-mJelg7on_ALbx
-    });
-    socket.on("productChange", (productData) => {
-      console.log("Product Data----------XXXXXXfff--------->", productData);
-    });
+    // const socket = io("http://localhost:7000/api/socket", {
+    //   transports: ["websocket", "polling", "flashsocket"],
+    // });
+    // socket.on("connect", () => {
+    //   console.log("CONNECTION SOCK", socket.id); // x8WIv7-mJelg7on_ALbx
+    // });
+    // socket.on("productChange", (productData) => {
+    //   console.log("Product Data----------XXXXXXfff--------->", productData);
+    // });
 
     //check the authetication of the user
     if (localStorage.jwtToken) {

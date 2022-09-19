@@ -19,6 +19,7 @@ function Header(props) {
 
   //provide event listenere
   useEffect(() => {
+    document.getElementById("autocomplete").style.display = "none";
     document.addEventListener("click", function () {
       if (document.getElementById("autocomplete") !== null) {
         document.getElementById("autocomplete").style.display = "none";
@@ -90,11 +91,13 @@ function Header(props) {
           {autoComplete.length > 0 &&
             autoComplete.map((sug) => (
               <li key={sug._id} id={sug._id} onClick={handleAutoComplete}>
-                {sug.keywords}
+                {sug.title}
               </li>
             ))}
         </ul>
-        <SearchIcon className="header__searchIcon" />
+        <span className="header__searchBox">
+          <SearchIcon className="header__searchIcon" />
+        </span>
       </div>
       <div className="header__nav">
         <Link to={"/login"}>

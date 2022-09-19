@@ -7,6 +7,8 @@ import multer from "multer";
 import multiparty from "multiparty";
 import formidable from "formidable";
 import keys from "../config/keys.js";
+import { redisClient } from "../server.js";
+
 
 /* Router configuration */
 const router = express.Router();
@@ -78,10 +80,28 @@ router.post(
 
 router.get("/getAllProducts", async (req, res) => {
   try {
-    const allProducts = await Product.find({});
+    console.time('start_query')
+    let currentPointer = req.query.currentPointer; //current pointer is the _id of the last document resulted
+    let query = currentPointer ? {
+      _id: { $gt: currentPointer }
+    } : {}
+    let allProducts = [];
+    const cacheProducts = await redisClient.get(currentPointer);
+    if (cacheProducts) {
+      console.log("INSIDER THE PRODUCTS CACHEDXXXXX")
+      allProducts = JSON.parse(cacheProducts);
+    } else {
+      console.log("GETTING FROM THE DATABASE")
+      allProducts = await Product.find(query).limit(25);
+      if(currentPointer){
+        console.log("SETTING THE REDIS CACHE")
+        await redisClient.set(currentPointer, JSON.stringify(allProducts));
+      }
+    }
     console.log(
       "HERE INSIDE THE TECH OF THE TECHH____________________---------------------------"
     );
+    console.timeEnd('start_query')
     res.status(200).json(allProducts);
   } catch (error) {
     console.log("Error", error);
@@ -115,7 +135,7 @@ router.get("/search", async (req, res) => {
     const response = await Product.find({ $text: { $search: req.query.text } });
     res.status(200).json(response);
   } catch (error) {
-    res.statu(500).json(error);
+    res.status(500).json(error);
   }
 });
 

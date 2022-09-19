@@ -13,15 +13,18 @@ import payments from "./routes/payments.js";
 import products from "./routes/products.js";
 import * as io from "socket.io";
 import { createServer } from "http";
+import redis from 'redis';
+import mocks from "./mocks/mocks.js";
 
 /* App configuration */
 const app = express();
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 8000;
 const server = createServer(app);
 const socketio = new io.Server(server, {
   origins: "http://localhost:4000",
 });
 const __dirname = path.resolve();
+export let redisClient;
 
 /* middlewares */
 app.use(
@@ -87,23 +90,37 @@ socketio.of("/api/socket").on("connection", (socket) => {
 /* Creating an event stream on the database */
 
 const connection = mongoose.connection;
+// mocks();
 
 connection.once("open", () => {
   console.log("MongoDB database connected");
 
   console.log("Setting change stream");
 
-  const productChangeStream = connection.collection("products").watch();
+  // const productChangeStream = connection.collection("products").watch();
 
-  productChangeStream.on("change", (change) => {
-    console.log("DATA Changed----------_>", change);
-    const productData = {
-      id: change.fullDocument._id,
-      title: change.fullDocument.title,
-    };
-    socketio.of("/api/socket").emit("productChange", productData);
-  });
+  // productChangeStream.on("change", (change) => {
+  //   console.log("DATA Changed----------_>", change);
+  //   const productData = {
+  //     id: change.fullDocument._id,
+  //     title: change.fullDocument.title,
+  //   };
+  //   socketio.of("/api/socket").emit("productChange", productData);
+  // });
 });
+
+/* Connect to the redis client */
+(async ()=>{
+  redisClient = redis.createClient({
+    // socket:{
+    //   host:'localhost', //connect via ternimal redis-cli -h host -p port
+    //   port:5500
+    // }
+  });
+  redisClient.on('error', (error)=> console.error(`Error : ${error}`))
+
+  await redisClient.connect();
+})()
 
 /* Static folder configuration */
 if (process.env.NODE_ENV === "production") {
@@ -121,3 +138,5 @@ app.get("*", (req, res) => {
 
 /* Listeing to the port */
 server.listen(port, () => console.log(`The port is listenting on :${port}`));
+
+

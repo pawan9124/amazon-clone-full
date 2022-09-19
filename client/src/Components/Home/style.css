@@ -23,6 +23,7 @@
 }
 .home__products_detail {
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 .home_banner {
   justify-content: center;

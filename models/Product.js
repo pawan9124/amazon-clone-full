@@ -31,10 +31,10 @@ const ProductSchema = new mongoose.Schema({
   },
 });
 
-ProductSchema.index({
-  title: "text",
-  keywords: "text",
-  seller: "text",
-  storeName: "text",
-});
+// ProductSchema.index({
+//   title: "text",
+//   keywords: "text",
+//   seller: "text",
+//   storeName: "text",
+// });
 export default mongoose.model("products", ProductSchema);

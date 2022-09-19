@@ -22,15 +22,18 @@
 }
 .header__searchInput {
   height: 12px;
-  padding: 10px;
+  padding: 20px;
   border: none;
   width: 100%;
   outline-color: orange;
 }
+.header__searchBox{
+  padding:7px;
+  background-color: #cd9042;
+  outline-color: orange;
+}
 
 .header__searchIcon {
-  padding: 5px;
-  height: 22px !important;
   background-color: #cd9042;
 }
 
@@ -72,12 +75,14 @@
 }
 .header__search > ul {
   background-color: white;
-  width: 94.5%;
+  width: 97.3%;
   list-style: none;
   padding: 0;
   position: absolute;
   left: 0;
   top: 33px;
+  height:400px;
+  overflow-y: scroll;
   /* bottom: -100px; */
 }
 .header__search > ul > li {
